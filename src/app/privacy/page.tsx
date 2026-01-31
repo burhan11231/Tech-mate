@@ -17,7 +17,7 @@ export default function PrivacyPage() {
         {/* INTRO */}
         <section className="space-y-3 text-sm text-gray-700 leading-relaxed">
           <p>
-            MITC (Mateen IT Corp) respects your privacy and is committed to
+            TECHMATE respects your privacy and is committed to
             protecting your personal information.
           </p>
           <p>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
           </h2>
           <p className="text-sm text-gray-700">
             If you have questions about this Privacy Policy, please contact
-            MITC using the contact details provided on the website.
+            TECHMATE using the contact details provided on the website.
           </p>
         </section>
 
