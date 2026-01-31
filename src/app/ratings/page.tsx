@@ -2,9 +2,9 @@ import { Suspense } from 'react';
 import ReviewsClient from './ReviewsClient';  
   
 export const metadata = {  
-  title: 'Customer Reviews | MITC Srinagar',  
+  title: 'Customer Reviews',  
   description:  
-    'Verified customer reviews for MITC Srinagar. Read real feedback from customers who purchased or serviced laptops at our showroom.',  
+    'Verified customer reviews for TECHMATE Srinagar. Read real feedback from customers who purchased or serviced laptops at our showroom.',  
 };  
   
 type PageProps = {  
