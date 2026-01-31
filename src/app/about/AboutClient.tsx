@@ -16,7 +16,7 @@ import { Salesperson } from '@/lib/firestore-models'
 ------------------------------------ */
 
 export const FALLBACK_IMAGE =
-  'https://res.cloudinary.com/dlesei0kn/image/upload/IMG-20251103-WA0003_bgmgkj.jpg'
+  'https://res.cloudinary.com/dlesei0kn/image/upload/v1769869958/Techmate-white_gzqunv.jpg'
 
 export const HERO_BG_IMAGE =
   'https://res.cloudinary.com/dlesei0kn/image/upload/AQMnry9yB4_29R_DPax5V1H2ceUilGvhceaQmiQctsDphQW7m3QahYtL79BgRsuXVsdthOQUvBi9_00UpP4O32Si_ptttc1.jpg'
@@ -117,12 +117,12 @@ export default function AboutClient() {
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
             A laptop showroom built on trust
             <span className="block mt-4 text-white/70 text-2xl lg:text-3xl font-medium">
-              Serving Kashmir with clarity and expertise since 2013
+              Serving Kashmir with clarity and expertise since 2020
             </span>
           </h1>
 
           <p className="mt-10 text-lg text-white/80 max-w-3xl leading-relaxed">
-            MITC (Mateen IT Corp) is a physical laptop showroom in Srinagar.
+            TECHMATE is a physical laptop showroom in Srinagar.
             We help customers understand laptops before buying — through
             real inventory, transparent explanations, and experienced guidance.
           </p>
@@ -179,7 +179,7 @@ export default function AboutClient() {
             </h2>
 
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              MITC started in Maisuma, Srinagar, with one principle:
+              TEXHMATE started in Srinagar with one principle:
               customers deserve clarity before spending their money.
             </p>
 
@@ -190,7 +190,7 @@ export default function AboutClient() {
             </p>
 
             <p className="text-lg text-gray-700 leading-relaxed">
-              Today, MITC combines a physical showroom with a digital platform
+              Today, TECHMATE combines a physical showroom with a digital platform
               so customers can explore confidently before visiting.
             </p>
           </div>
@@ -204,7 +204,7 @@ export default function AboutClient() {
 
           <div className="max-w-3xl mb-20">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-              How MITC works
+              How we works
             </h2>
             <p className="mt-5 text-lg text-gray-600">
               Clear principles that guide every recommendation.
@@ -251,7 +251,7 @@ export default function AboutClient() {
     {/* SECTION HEADER */}
     <div className="max-w-3xl mb-20">
       <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-        The people behind MITC
+        The people behind TECHMATE
       </h2>
       <p className="mt-5 text-lg text-gray-600">
         Professionals who work directly with customers every day.
@@ -376,11 +376,11 @@ export default function AboutClient() {
     "
   >
     <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-      Talk to MITC. Get clarity. Choose with confidence.
+      Talk to us. Get clarity. Choose with confidence.
     </h2>
 
     <p className="text-lg text-white/70 mb-10 max-w-2xl">
-      Have questions or need guidance? Explore our services and reach out to the MITC team — we’re here to help, without pressure.
+      Have questions or need guidance? Explore our services and reach out to the team — we’re here to help, without pressure.
     </p>
 
     <div
