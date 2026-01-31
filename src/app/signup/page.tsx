@@ -52,10 +52,10 @@ export default function SignupPage() {
 
   /* ✅ Redirect ONLY when auth context is ready */
   useEffect(() => {
-    if (!isLoading && user) {
-      router.replace('/profile')
-    }
-  }, [user, isLoading, router])
+  if (user) {
+    router.replace('/')
+  }
+}, [user, router])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
