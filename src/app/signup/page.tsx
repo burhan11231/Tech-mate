@@ -125,34 +125,38 @@ export default function SignupPage() {
   /* ================= GOOGLE SIGNUP ================= */
 
   const handleGoogleSignup = async () => {
-    setLoading(true)
-    try {
-      const { user } = await signInWithPopup(auth, new GoogleAuthProvider())
+  setLoading(true)
 
-      const ref = doc(db, 'users', user.uid)
-      const snap = await getDoc(ref)
+  try {
+    const result = await signInWithPopup(
+      auth,
+      new GoogleAuthProvider()
+    )
 
-      if (!snap.exists()) {
-        await setDoc(ref, {
-          uid: user.uid,
-          name: user.displayName || 'Google User',
-          email: user.email,
-          phone: '',
-          role: 'user',
-          photoURL: user.photoURL || '',
-          isDisabled: false,
-          createdAt: serverTimestamp(),
-        })
-      }
-
+    // 🔐 If user exists, signup/login is SUCCESS
+    if (result?.user) {
       toast.success('Account created successfully')
-    } catch (err) {
-      console.error(err)
-      toast.error('Google signup failed')
-    } finally {
-      setLoading(false)
+      return // ⛔ IMPORTANT: stop here
     }
+
+    // fallback (rare)
+    toast.error('Google signup failed')
+  } catch (err: any) {
+    console.error('[GOOGLE_SIGNUP_ERROR]', err)
+
+    // ❗ Ignore abort/navigation related errors
+    if (
+      err?.code === 'auth/popup-closed-by-user' ||
+      err?.code === 'auth/cancelled-popup-request'
+    ) {
+      return
+    }
+
+    toast.error('Google signup failed')
+  } finally {
+    setLoading(false)
   }
+}
 
   /* ================= UI ================= */
 
