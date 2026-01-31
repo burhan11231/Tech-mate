@@ -8,7 +8,7 @@ const OG_IMAGE =
 export const metadata: Metadata = {
   title: 'Laptop Sales & IT Services in Srinagar',
   description:
-    'Expert guidance and in-store diagnostics, handled personally. Explore our services and contact the MITC team directly through our website.',
+    'Expert guidance and in-store diagnostics, handled personally. Explore our services or connect with the team through our website.',
 
   alternates: {
     canonical: 'https://techmate-srinagar.netlify.app/',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
     title: 'Laptop Sales & IT Services in Srinagar',
     description:
-      'Expert guidance and in-store diagnostics, handled personally. Explore our services and contact the team directly through our website.',
+      'Expert guidance and in-store diagnostics, handled personally. Explore our services or connect with the team through our website.',
 
     images: [
       {
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Laptop Sales & IT Services in Srinagar',
     description:
-      'Expert guidance and in-store diagnostics, handled personally. Explore our services and contact the team directly through our website.',
+      'Expert guidance and in-store diagnostics, handled personally. Explore our services or connect with the team through our website.',
     images: [OG_IMAGE],
   },
 }
