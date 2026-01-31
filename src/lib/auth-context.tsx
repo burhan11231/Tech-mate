@@ -7,7 +7,9 @@ import {
 import {
   doc,
   getDoc,
+  setDoc,
   Timestamp,
+  serverTimestamp,
 } from 'firebase/firestore'
 import React, {
   createContext,
@@ -48,7 +50,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (authUser) => {
-      // 🔹 Logged out
       if (!authUser) {
         setUser(null)
         setIsLoading(false)
@@ -57,38 +58,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       try {
         const ref = doc(db, 'users', authUser.uid)
-        const snap = await getDoc(ref)
+        let snap = await getDoc(ref)
 
-        // ⏳ During signup, Firestore doc may not exist yet
-        // DO NOT sign out, just wait
+        // ✅ CREATE USER DOC IF MISSING (CRITICAL FIX)
         if (!snap.exists()) {
-          setIsLoading(true)
-          return
+          await setDoc(ref, {
+            uid: authUser.uid,
+            name: authUser.displayName || 'User',
+            email: authUser.email || '',
+            phone: '',
+            role: 'user',
+            photoURL: authUser.photoURL || '',
+            isDisabled: false,
+            createdAt: serverTimestamp(),
+          })
+
+          snap = await getDoc(ref)
         }
 
         const data = snap.data()
 
-        // 🔐 HARD BLOCK: deactivated account
-        if (data.isDisabled === true) {
+        if (data?.isDisabled === true) {
           await signOut(auth)
           setUser(null)
           setIsLoading(false)
           return
         }
 
-        // ✅ Valid active user
         setUser({
           uid: authUser.uid,
-          name: data.name || authUser.displayName || 'User',
-          email: data.email || authUser.email || '',
-          phone: data.phone || '',
-          role: data.role === 'admin' ? 'admin' : 'user',
-          photoURL: data.photoURL || authUser.photoURL || null,
+          name: data?.name || authUser.displayName || 'User',
+          email: data?.email || authUser.email || '',
+          phone: data?.phone || '',
+          role: data?.role === 'admin' ? 'admin' : 'user',
+          photoURL: data?.photoURL || authUser.photoURL || null,
           providers: authUser.providerData.map(p => p.providerId),
-          lastNameUpdatedAt: data.lastNameUpdatedAt,
+          lastNameUpdatedAt: data?.lastNameUpdatedAt,
         })
       } catch (err) {
-        console.error('[AUTH_LOAD_ERROR]', err)
+        console.error('[AUTH_CONTEXT_ERROR]', err)
         await signOut(auth)
         setUser(null)
       } finally {
