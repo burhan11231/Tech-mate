@@ -116,6 +116,116 @@ export default function ServicesClient() {
         </div>
       </section>
 
+
+{/* ================= LAPTOP SALES ================= */}
+<section className="relative py-28 lg:py-36 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-start">
+
+    <div>
+      <h2 className="text-3xl lg:text-4xl font-extrabold text-gray-900 mb-8">
+        Laptop sales — in store
+      </h2>
+
+      <p className="text-lg text-gray-700 leading-relaxed mb-10">
+        We sell laptops the way we’d recommend to ourselves — verified,
+        explainable, and testable before purchase.
+      </p>
+
+      <ul className="space-y-4 text-gray-700 text-base">
+        <li>• Refurbished & pre-owned business laptops</li>
+        <li>• Condition, battery health, and specs explained clearly</li>
+        <li>• Upgrade advice before you commit</li>
+        <li>• Hands-on testing in-store</li>
+      </ul>
+
+      <p className="mt-8 text-sm text-gray-500">
+        No online checkout. No pressure. Visit, inspect, and decide.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+      {/* ================= REPAIRS & DIAGNOSTICS ================= */}
+<section className="relative py-28 lg:py-36 bg-white">
+  <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-start">
+
+    <div>
+      <h2 className="text-3xl lg:text-4xl font-extrabold text-gray-900 mb-8">
+        Repairs & diagnostics
+      </h2>
+
+      <p className="text-lg text-gray-700 leading-relaxed mb-10">
+        We diagnose first. If a repair doesn’t make sense, we say so.
+      </p>
+
+      <ul className="space-y-4 text-gray-700">
+        <li>• Full hardware diagnostics</li>
+        <li>• Chip-level repair (when viable)</li>
+        <li>• Screen, battery, keyboard replacement</li>
+        <li>• Port, power, and motherboard faults</li>
+        <li>• BIOS & firmware issues</li>
+      </ul>
+
+      <p className="mt-8 text-sm text-gray-500">
+        No unnecessary work. No vague answers.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+      {/* ================= UPGRADES ================= */}
+<section className="relative py-28 lg:py-36 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-start">
+
+    <div>
+      <h2 className="text-3xl lg:text-4xl font-extrabold text-gray-900 mb-8">
+        Upgrades & performance
+      </h2>
+
+      <p className="text-lg text-gray-700 leading-relaxed mb-10">
+        Often, a focused upgrade delivers better results than buying new.
+      </p>
+
+      <ul className="space-y-4 text-gray-700">
+        <li>• RAM expansion</li>
+        <li>• SSD upgrades</li>
+        <li>• OS installation & tuning</li>
+        <li>• Thermal cleaning & servicing</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+{/* ================= BUSINESS IT ================= */}
+<section className="relative py-28 lg:py-36 bg-white">
+  <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-start">
+
+    <div>
+      <h2 className="text-3xl lg:text-4xl font-extrabold text-gray-900 mb-8">
+        Business & professional IT support
+      </h2>
+
+      <p className="text-lg text-gray-700 leading-relaxed mb-10">
+        We support professionals and offices that need consistency,
+        not one-time fixes.
+      </p>
+
+      <ul className="space-y-4 text-gray-700">
+        <li>• Office laptop consultation</li>
+        <li>• Bulk diagnostics & upgrades</li>
+        <li>• Maintenance planning</li>
+        <li>• Requirement-based solutions</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+      
+
       {/* ================= CTA ================= */}
       <section className="py-24 lg:py-32 px-6 bg-gray-950 text-white">
         <div className="max-w-4xl mx-auto text-center">
