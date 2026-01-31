@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import ServicesClient from './ServicesClient'
 
 export const metadata: Metadata = {
-  title: 'Laptop Sales, Repairs & IT Support in Srinagar',
+  title: 'TECHMATE Services',
   description:
     'Professional laptop sales, repairs, diagnostics, upgrades, and IT support in Srinagar. Transparent guidance, in-store inspection, and expert technical assistance.',
 
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   ],
 
   openGraph: {
-    title: 'Laptop Sales & Repairs in Srinagar',
+    title: 'TECHMATE Services',
     description:
       'Laptop sales, diagnostics, repairs, upgrades, and professional IT support in Srinagar. Visit the showroom or connect with an expert.',
     url: 'https://techmate-srinagar.netlify.app/services',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 
   twitter: {
     card: 'summary_large_image',
-    title: 'Laptop Sales & Repairs in Srinagar',
+    title: 'TECHMATE Services',
     description:
       'Professional laptop sales, diagnostics, repairs, upgrades, and IT support in Srinagar.',
     images: [
