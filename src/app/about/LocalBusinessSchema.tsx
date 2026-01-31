@@ -5,24 +5,24 @@ export default function LocalBusinessSchema() {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
 
-    name: 'MITC – Mateen IT Corp',
-    url: 'https://mitck.netlify.app',
+    name: 'TECHMATE',
+    url: 'https://techmate-srinagar.netlify.app/',
 
     logo:
-      'https://res.cloudinary.com/dlesei0kn/image/upload/IMG-20251103-WA0003_bgmgkj.jpg',
+      'https://res.cloudinary.com/dlesei0kn/image/upload/v1769869958/Techmate-white_gzqunv.jpg',
 
     image:
-      'https://res.cloudinary.com/dlesei0kn/image/upload/IMG-20251103-WA0003_bgmgkj.jpg',
+      'https://res.cloudinary.com/dlesei0kn/image/upload/v1769869958/Techmate-white_gzqunv.jpg',
 
     description:
-      "MITC (Mateen IT Corp) is a trusted laptop showroom in Srinagar, Kashmir, offering transparent laptop sales, diagnostics, and upgrades since 2013.",
+      "TECHMATE is a trusted laptop showroom in Srinagar, Kashmir, offering transparent laptop sales, diagnostics, and upgrades since 2020.",
 
-    telephone: '+91 98765 43210',
-    email: 'info@mitc.com',
+    telephone: '+91 7006113695',
+    email: 'info@techmate.com',
 
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Gaw Kadal, Maisuma, Srinagar, J&K - 190001',
+      streetAddress: 'Chanapora Bypass Road, Bagh-i-Mehtab, Srinagar, Jammu and Kashmir 190019',
       addressLocality: 'Srinagar',
       addressRegion: 'Jammu and Kashmir',
       addressCountry: 'IN',
