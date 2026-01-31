@@ -72,7 +72,7 @@ export default function Footer() {
           <div>
             <p className="text-gray-500 max-w-sm">
               Kashmir&apos;s trusted authority for premium commercial laptops and
-              professional IT services since 2013.
+              professional IT services since 2020.
             </p>
 
             <Link href="/" className="inline-block mt-6">
