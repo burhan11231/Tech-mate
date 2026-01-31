@@ -106,7 +106,7 @@ const currentWord = heroWords[currentWordIndex];
         <div className="absolute inset-0">  
           <img  
             src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=2400"  
-            alt="MITC Srinagar premium laptops showroom"  
+            alt="TECHMATE Srinagar premium laptops showroom"  
             className="h-full w-full object-cover object-center opacity-60"  
             loading="eager"  
           />  
@@ -219,7 +219,7 @@ const currentWord = heroWords[currentWordIndex];
                 </div>  
                 <div className="text-4xl font-bold text-gray-900 mb-2">1,000+</div>  
                 <p className="text-sm text-gray-500 leading-relaxed">  
-                  Repeat clients who trust MITC for long-term support.  
+                  Repeat clients who trust TECHMATE for long-term support.  
                 </p>  
               </div>  
             </div>  
