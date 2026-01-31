@@ -141,7 +141,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="mt-10 pt-6 border-t flex flex-col md:flex-row gap-4 justify-between">
           <p className="text-sm text-gray-400">
-            © {currentYear} {settings.businessName}. All rights reserved.
+            © {currentYear} TECHMATE. All rights reserved.
           </p>
 
           <div className="flex gap-6">
