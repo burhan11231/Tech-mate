@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import HomeClient from './HomeClient'
 
 const OG_IMAGE =
-  'https://res.cloudinary.com/dlesei0kn/image/upload/v1769869958/Techmate-white_gzqunv.jpg'
+  'https://res.cloudinary.com/dlesei0kn/image/upload/v1769876155/techmate-home-og_ovp55x.jpg'
 
 export const metadata: Metadata = {
   title: 'Laptop Sales & IT Services in Srinagar',
