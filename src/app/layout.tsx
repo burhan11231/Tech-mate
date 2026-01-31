@@ -6,12 +6,12 @@ import Footer from '@/components/Footer'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'MITC – Trusted Laptop Showroom & IT Services in Srinagar | Mateen IT Corp',
+  title: 'Trusted Laptop Showroom & IT Services in Srinagar',
   description:
-    "Kashmir's Tech Authority Since 2013. Professional laptop sales, repairs, and IT services in Srinagar.",
+    "Kashmir's Tech Authority Since 2020. Professional laptop sales, repairs, and IT services in Srinagar.",
 
   alternates: {
-    canonical: 'https://mitc-business-platform.netlify.app/',
+    canonical: 'https://techmate-srinagar.netlify.app/',
   },
 
   robots: {
