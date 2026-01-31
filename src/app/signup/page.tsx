@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import {
@@ -8,12 +8,12 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
-  signOut,
 } from 'firebase/auth'
 import { auth, db } from '@/lib/firebase'
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore'
 import toast from 'react-hot-toast'
 import { FcGoogle } from 'react-icons/fc'
+import { useAuth } from '@/lib/auth-context'
 
 interface SignupForm {
   name: string
@@ -25,6 +25,7 @@ interface SignupForm {
 
 export default function SignupPage() {
   const router = useRouter()
+  const { user, isLoading } = useAuth()
   const [loading, setLoading] = useState(false)
 
   const [form, setForm] = useState<SignupForm>({
@@ -42,6 +43,13 @@ export default function SignupPage() {
       document.body.style.overflow = ''
     }
   }, [])
+
+  /* ✅ REDIRECT AFTER AUTH CONTEXT IS READY */
+  useEffect(() => {
+    if (!isLoading && user) {
+      router.replace('/profile')
+    }
+  }, [user, isLoading, router])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm(p => ({ ...p, [e.target.name]: e.target.value }))
@@ -66,32 +74,34 @@ export default function SignupPage() {
 
     try {
       const cred = await createUserWithEmailAndPassword(
-  auth,
-  form.email,
-  form.password
-)
+        auth,
+        form.email,
+        form.password
+      )
 
-const user = cred.user
+      const user = cred.user
 
-await updateProfile(user, { displayName: form.name })
+      await updateProfile(user, { displayName: form.name })
 
-await setDoc(doc(db, 'users', user.uid), {
-  uid: user.uid,
-  name: form.name,
-  email: form.email,
-  phone: form.phone || '',
-  role: 'user',
-  photoURL: '',
-  isDisabled: false,
-  createdAt: serverTimestamp(),
-})
+      await setDoc(doc(db, 'users', user.uid), {
+        uid: user.uid,
+        name: form.name,
+        email: form.email,
+        phone: form.phone || '',
+        role: 'user',
+        photoURL: '',
+        isDisabled: false,
+        createdAt: serverTimestamp(),
+      })
 
-await user.reload() // 🔥 important
-
-toast.success('Account created successfully')
-router.push('/profile')
+      toast.success('Account created successfully')
+      // ❌ DO NOT redirect here
     } catch (e: any) {
-      toast.error('Signup failed. Please try again.')
+      toast.error(
+        e?.code === 'auth/email-already-in-use'
+          ? 'Email already registered. Please login.'
+          : 'Signup failed. Please try again.'
+      )
     } finally {
       setLoading(false)
     }
@@ -100,46 +110,44 @@ router.push('/profile')
   /* ================= GOOGLE SIGNUP ================= */
 
   const handleGoogleSignup = async () => {
-  setLoading(true)
-  try {
-    const { user } = await signInWithPopup(auth, new GoogleAuthProvider())
+    setLoading(true)
+    try {
+      const { user } = await signInWithPopup(
+        auth,
+        new GoogleAuthProvider()
+      )
 
-    const ref = doc(db, 'users', user.uid)
-    const snap = await getDoc(ref)
+      const ref = doc(db, 'users', user.uid)
+      const snap = await getDoc(ref)
 
-    // ✅ Create doc ONLY if missing
-    if (!snap.exists()) {
-      await setDoc(ref, {
-        uid: user.uid,
-        name: user.displayName || 'Google User',
-        email: user.email,
-        phone: '',
-        role: 'user',
-        photoURL: user.photoURL || '',
-        isDisabled: false,
-        createdAt: serverTimestamp(),
-      })
+      if (!snap.exists()) {
+        await setDoc(ref, {
+          uid: user.uid,
+          name: user.displayName || 'Google User',
+          email: user.email,
+          phone: '',
+          role: 'user',
+          photoURL: user.photoURL || '',
+          isDisabled: false,
+          createdAt: serverTimestamp(),
+        })
+      }
+
+      toast.success('Account created successfully')
+      // ❌ DO NOT redirect here
+    } catch (e) {
+      console.error(e)
+      toast.error('Google signup failed')
+    } finally {
+      setLoading(false)
     }
-
-    toast.success('Account created successfully')
-    router.push('/profile')
-  } catch (e: any) {
-    console.error(e)
-    toast.error('Google signup failed')
-  } finally {
-    setLoading(false)
   }
-}
 
   /* ================= UI ================= */
 
   return (
     <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm overflow-y-auto">
-
-      {/* MODAL WRAPPER */}
       <div className="min-h-full flex justify-center px-4 py-10">
-
-        {/* MODAL */}
         <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 sm:p-8 my-auto">
 
           {/* HEADER */}
@@ -154,13 +162,48 @@ router.push('/profile')
 
           {/* FORM */}
           <form onSubmit={handleSignup} className="space-y-4">
-            <input name="name" placeholder="Full name" required onChange={onChange} className="input-field" />
-            <input name="email" type="email" placeholder="Email" required onChange={onChange} className="input-field" />
-            <input name="phone" placeholder="Phone (optional)" onChange={onChange} className="input-field" />
-            <input name="password" type="password" placeholder="Password" required onChange={onChange} className="input-field" />
-            <input name="confirmPassword" type="password" placeholder="Confirm password" required onChange={onChange} className="input-field" />
+            <input
+              name="name"
+              placeholder="Full name"
+              required
+              onChange={onChange}
+              className="input-field"
+            />
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              required
+              onChange={onChange}
+              className="input-field"
+            />
+            <input
+              name="phone"
+              placeholder="Phone (optional)"
+              onChange={onChange}
+              className="input-field"
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+              onChange={onChange}
+              className="input-field"
+            />
+            <input
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirm password"
+              required
+              onChange={onChange}
+              className="input-field"
+            />
 
-            <button disabled={loading} className="w-full h-11 rounded-lg bg-gray-900 text-white font-semibold">
+            <button
+              disabled={loading}
+              className="w-full h-11 rounded-lg bg-gray-900 text-white font-semibold disabled:opacity-50"
+            >
               {loading ? 'Creating…' : 'Create account'}
             </button>
           </form>
@@ -175,7 +218,8 @@ router.push('/profile')
           {/* GOOGLE */}
           <button
             onClick={handleGoogleSignup}
-            className="w-full h-11 border rounded-lg font-semibold flex items-center justify-center gap-3"
+            disabled={loading}
+            className="w-full h-11 border rounded-lg font-semibold flex items-center justify-center gap-3 hover:bg-gray-50 transition"
           >
             <FcGoogle size={22} />
             Continue with Google
