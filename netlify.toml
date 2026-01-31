@@ -1,0 +1,8 @@
+# Netlify Configuration for MITC App (Next.js)
+
+[build]
+  command = "npm run build"
+  node_version = "18"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
