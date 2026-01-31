@@ -98,10 +98,10 @@ export default function Header() {
 
   <div className="flex flex-col justify-center leading-none">
     <div className="text-sm lg:text-xl font-bold tracking-tight text-gray-900">
-      {settings?.businessName || 'MITC'}
+      {settings?.businessName || 'Srinagar, Kashmir'}
     </div>
     <div className="text-[8px] lg:text-[10px] uppercase tracking-[0.15em] font-bold text-gray-500">
-      {settings?.tagline || 'Mateen IT Corp'}
+      {settings?.tagline || 'TECHMATE GADGETS STORE'}
     </div>
   </div>
 </Link>  
