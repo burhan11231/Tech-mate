@@ -14,7 +14,7 @@ import {
 import { useSettingsRTDB } from '@/hooks/useSettingsRTDB';
 
 const FALLBACK_LOGO =
-  'https://res.cloudinary.com/dlesei0kn/image/upload/IMG-20251103-WA0003_bgmgkj.jpg';
+  'https://res.cloudinary.com/dlesei0kn/image/upload/tech-mate_logo_cpaljz.png';
 
 const SOCIAL_ICONS: Record<string, React.ElementType> = {
   instagram: Instagram,
