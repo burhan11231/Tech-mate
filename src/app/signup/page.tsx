@@ -66,36 +66,28 @@ export default function SignupPage() {
 
     try {
       const cred = await createUserWithEmailAndPassword(
-        auth,
-        form.email,
-        form.password
-      )
+  auth,
+  form.email,
+  form.password
+)
 
-      const user = cred.user
-      const ref = doc(db, 'users', user.uid)
-      const snap = await getDoc(ref)
+const user = cred.user
 
-      if (snap.exists()) {
-        await signOut(auth)
-        toast.error('User already registered. Please login.')
-        return
-      }
+await updateProfile(user, { displayName: form.name })
 
-      await updateProfile(user, { displayName: form.name })
+await setDoc(doc(db, 'users', user.uid), {
+  uid: user.uid,
+  name: form.name,
+  email: form.email,
+  phone: form.phone || '',
+  role: 'user',
+  photoURL: '',
+  isDisabled: false,
+  createdAt: serverTimestamp(),
+})
 
-      await setDoc(ref, {
-        uid: user.uid,
-        name: form.name,
-        email: form.email,
-        phone: form.phone || '',
-        role: 'user',
-        photoURL: '',
-        isDisabled: false,
-        createdAt: serverTimestamp(),
-      })
-
-      toast.success('Account created successfully')
-      router.push('/profile')
+toast.success('Account created successfully')
+router.push('/profile')
     } catch (e: any) {
       toast.error('Signup failed. Please try again.')
     } finally {
@@ -106,19 +98,15 @@ export default function SignupPage() {
   /* ================= GOOGLE SIGNUP ================= */
 
   const handleGoogleSignup = async () => {
-    setLoading(true)
-    try {
-      const { user } = await signInWithPopup(auth, new GoogleAuthProvider())
+  setLoading(true)
+  try {
+    const { user } = await signInWithPopup(auth, new GoogleAuthProvider())
 
-      const ref = doc(db, 'users', user.uid)
-      const snap = await getDoc(ref)
+    const ref = doc(db, 'users', user.uid)
+    const snap = await getDoc(ref)
 
-      if (snap.exists()) {
-        await signOut(auth)
-        toast.error('User already registered. Please login.')
-        return
-      }
-
+    // ✅ Create doc ONLY if missing
+    if (!snap.exists()) {
       await setDoc(ref, {
         uid: user.uid,
         name: user.displayName || 'Google User',
@@ -129,15 +117,17 @@ export default function SignupPage() {
         isDisabled: false,
         createdAt: serverTimestamp(),
       })
-
-      toast.success('Account created successfully')
-      router.push('/profile')
-    } catch {
-      toast.error('Google signup failed')
-    } finally {
-      setLoading(false)
     }
+
+    toast.success('Account created successfully')
+    router.push('/profile')
+  } catch (e: any) {
+    console.error(e)
+    toast.error('Google signup failed')
+  } finally {
+    setLoading(false)
   }
+}
 
   /* ================= UI ================= */
 
