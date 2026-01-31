@@ -146,7 +146,7 @@ export default function ContactPage() {
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-12">
             <p className="text-xs font-bold tracking-[0.3em] uppercase text-blue-600 mb-3">
-              Contact MITC
+              Contact Store
             </p>
             <h1 className="text-4xl font-bold text-gray-900 mb-3">
               Let’s Talk
