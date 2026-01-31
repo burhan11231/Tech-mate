@@ -63,8 +63,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
         // 🔹 Firestore user missing → invalid account    
         if (!snap.exists()) {
-  console.warn('[AUTH] User doc missing, waiting for creation')
-  setIsLoading(false)
+  console.warn('[AUTH] User doc missing, retrying...')
+
+  // retry once after short delay
+  setTimeout(async () => {
+    try {
+      const retrySnap = await getDoc(ref)
+      if (retrySnap.exists()) {
+        const data = retrySnap.data()
+        setUser({
+          uid: authUser.uid,
+          name: data.name || authUser.displayName || 'User',
+          email: data.email || authUser.email || '',
+          phone: data.phone || '',
+          role: data.role === 'admin' ? 'admin' : 'user',
+          photoURL: data.photoURL || authUser.photoURL || null,
+          providers: authUser.providerData.map(p => p.providerId),
+          lastNameUpdatedAt: data.lastNameUpdatedAt,
+        })
+      }
+    } catch (e) {
+      console.error('[AUTH_RETRY_FAILED]', e)
+    } finally {
+      setIsLoading(false)
+    }
+  }, 400)
+
   return
 }    
     
