@@ -80,10 +80,10 @@ export default function TeamPage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/contact"
+              href="/about us"
               className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition"
             >
-              Contact MITC
+              Learn more about us
             </Link>
             <a
               href="#team"
