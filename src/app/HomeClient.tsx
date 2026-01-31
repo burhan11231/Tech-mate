@@ -19,7 +19,7 @@ import { RiEyeLine } from 'react-icons/ri';
 import { TbArrowsUpRight, TbChecks } from 'react-icons/tb';  
   
 import ContactInquiryForm from '@/components/ContactInquiryForm';  
-import TopFooter from '@/components/topFooter';  
+import GetDirection from '@/components/getDirection';  
   
 /* ---------------- CONSTANTS ---------------- */  
   
@@ -118,7 +118,7 @@ const currentWord = heroWords[currentWordIndex];
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-xl shadow-2xl">  
             <span className="flex h-2 w-2 rounded-full bg-[#0071e3] shadow-[0_0_10px_#0071e3] animate-pulse" />  
             <span className="text-[10px] lg:text-[11px] font-bold text-white tracking-[0.15em] uppercase">  
-              Kashmir's Tech Authority - Since 2013  
+              Kashmir's Tech Authority - Since 2020  
             </span>  
           </div>  
   
@@ -149,7 +149,7 @@ const currentWord = heroWords[currentWordIndex];
                   <div className="flex items-center gap-2 mb-6">  
                     <div className="h-[1px] w-8 bg-[#0071e3]" />  
                     <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">  
-                      The MITC Standard  
+                      The TECHMATE Standard  
                     </p>  
                   </div>  
                   <p className="text-white text-2xl lg:text-4xl font-semibold tracking-tight leading-tight">  
@@ -157,13 +157,13 @@ const currentWord = heroWords[currentWordIndex];
                     <span className="text-white/40">Confident purchase.</span>  
                   </p>  
                   <p className="mt-6 text-white/50 text-base lg:text-lg leading-relaxed max-w-xl">  
-                    Mateen IT Corp operates with a standards-first approach—prioritizing device integrity, accurate diagnostics, and long-term usability over quick sales. Every system is evaluated for performance, reliability, and upgrade potential before it reaches a customer.  
+                    We operates with a standards-first approach—prioritizing device integrity, accurate diagnostics, and long-term usability over quick sales. Every system is evaluated for performance, reliability, and upgrade potential before it reaches a customer.  
                   </p>  
                 </div>  
                 <div className="lg:col-span-2 relative h-64 lg:h-auto overflow-hidden">  
                   <img  
                     src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&q=80&w=1600"  
-                    alt="MITC Srinagar workspace with tested laptops"  
+                    alt="TECHMATE workspace with tested laptops"  
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"  
                     loading="lazy"  
                   />  
@@ -186,7 +186,7 @@ const currentWord = heroWords[currentWordIndex];
               <div className="inline-flex items-center gap-2.5 rounded-full border border-gray-200 bg-white px-4 py-2">  
                 <span className="h-1.5 w-1.5 rounded-full bg-[#0071e3]" />  
                 <span className="text-[10px] lg:text-[11px] font-bold tracking-[0.2em] uppercase text-gray-500">  
-                  About Mateen IT Corp  
+                  About TECHMATE  
                 </span>  
               </div>  
               <h2 className="text-4xl lg:text-6xl font-bold tracking-tight text-gray-900 leading-[1.1]">  
@@ -194,13 +194,13 @@ const currentWord = heroWords[currentWordIndex];
                 <span className="block text-gray-400">built on trust.</span>  
               </h2>  
               <p className="text-lg text-gray-600 max-w-xl leading-relaxed">  
-                Established in Srinagar in 2013, MITC provides dependable commercial-grade laptops and expert repair services, with all diagnostics and servicing handled in person at our showroom.  
+                Established in Srinagar in 2020, We provides dependable commercial-grade laptops and expert repair services, with all diagnostics and servicing handled in person at our showroom.  
               </p>  
               <Link  
                 href="/about"  
                 className="inline-flex items-center gap-2 text-sm font-semibold text-[#0071e3] hover:underline hover:text-[#005bb5] transition-colors"  
               >  
-                Learn more about MITC →  
+                Learn more about us →  
               </Link>  
             </div>  
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-10 lg:mt-0">  
@@ -208,7 +208,7 @@ const currentWord = heroWords[currentWordIndex];
                 <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#0071e3] mb-3">  
                   Experience  
                 </div>  
-                <div className="text-4xl font-bold text-gray-900 mb-2">11+ Years</div>  
+                <div className="text-4xl font-bold text-gray-900 mb-2">5+ Years</div>  
                 <p className="text-sm text-gray-500 leading-relaxed">  
                   Serving professionals and businesses across Kashmir.  
                 </p>  
@@ -217,7 +217,7 @@ const currentWord = heroWords[currentWordIndex];
                 <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#0071e3] mb-3">  
                   Customers  
                 </div>  
-                <div className="text-4xl font-bold text-gray-900 mb-2">5,000+</div>  
+                <div className="text-4xl font-bold text-gray-900 mb-2">1,000+</div>  
                 <p className="text-sm text-gray-500 leading-relaxed">  
                   Repeat clients who trust MITC for long-term support.  
                 </p>  
@@ -405,7 +405,7 @@ const currentWord = heroWords[currentWordIndex];
         </div>  
   
         <div className="py-6">  
-          <TopFooter />  
+          <GetDirection />  
         </div>  
       </div>  
   
