@@ -17,7 +17,7 @@ export default function TermsPage() {
         {/* INTRO */}
         <section className="space-y-3 text-gray-700 text-sm leading-relaxed">
           <p>
-            Welcome to <strong>MITC (Mateen IT Corp)</strong>. These Terms &
+            Welcome to <strong>TECHMATE Gadgets Store</strong>. These Terms &
             Conditions govern your use of our website and related services.
           </p>
           <p>
@@ -64,7 +64,7 @@ export default function TermsPage() {
             Services
           </h2>
           <p className="text-sm text-gray-700">
-            MITC provides in-store services including laptop sales,
+            TECHMATE provides in-store services including laptop sales,
             diagnostics, repairs, upgrades, and professional IT support.
           </p>
           <p className="text-sm text-gray-700">
@@ -83,7 +83,7 @@ export default function TermsPage() {
             store review.
           </p>
           <p className="text-sm text-gray-700">
-            Reviews are moderated before publication. MITC reserves the right
+            Reviews are moderated before publication. TECHMATE reserves the right
             to approve, reject, edit visibility, or remove reviews that violate
             guidelines or are misleading.
           </p>
@@ -99,12 +99,12 @@ export default function TermsPage() {
             general informational purposes only.
           </p>
           <p className="text-sm text-gray-700">
-            MITC makes no warranties regarding completeness, accuracy, or
+            TECHMATE makes no warranties regarding completeness, accuracy, or
             reliability. Any reliance you place on information from this site
             is strictly at your own risk.
           </p>
           <p className="text-sm text-gray-700">
-            MITC shall not be liable for any loss or damage arising from use of
+            TECHMATE shall not be liable for any loss or damage arising from use of
             the website or reliance on its content.
           </p>
         </section>
@@ -126,7 +126,7 @@ export default function TermsPage() {
             Contact
           </h2>
           <p className="text-sm text-gray-700">
-            For questions regarding these terms, please contact MITC through
+            For questions regarding these terms, please contact TECHMATE through
             the contact details provided on this website.
           </p>
         </section>
