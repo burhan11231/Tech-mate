@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-export default function TopFooter() {
+export default function GetDirection() {
   return (
     <div className="w-full bg-white border border-gray-200 rounded-3xl shadow-xl p-8">
       {/* HEADER */}
@@ -12,10 +12,10 @@ export default function TopFooter() {
             Store Location
           </p>
           <h3 className="text-xl font-bold text-gray-900 leading-tight">
-            Gaw Kadal, Maisuma
+            Chanapora Bypass Road
           </h3>
           <p className="text-sm text-gray-500">
-            Srinagar, J&K — 190001
+            Srinagar, Jammu and Kashmir 190019
           </p>
         </div>
       </div>
@@ -26,7 +26,7 @@ export default function TopFooter() {
       {/* FOOT ACTION ROW */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <a
-          href="https://maps.app.goo.gl/bH7r6o1jJvU5TLzL7"
+          href="https://maps.app.goo.gl/2A7278B8rGM1z23h7"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm font-semibold text-gray-900 hover:underline"
