@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About TECHMATE',
     description:
-      'Learn about TECHMATE, a trusted laptop showroom in Srinagar, Kashmir since 2020.',
+      'Learn about TECHMATE, a trusted laptop showroom in Srinagar, Kashmir.',
     url: 'https://techmate-srinagar.netlify.app/about',
     siteName: 'TECHMATE Gadgets',
     type: 'website',
