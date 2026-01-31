@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     siteName: 'TECHMATE',
 
-    title: 'MITC – Laptop Sales & IT Services in Srinagar',
+    title: 'Laptop Sales & IT Services in Srinagar',
     description:
       'Expert guidance and in-store diagnostics, handled personally. Explore our services and contact the team directly through our website.',
 
