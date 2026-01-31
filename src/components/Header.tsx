@@ -21,7 +21,7 @@ const navItems = [
 
 
 const FALLBACK_LOGO =
-  'https://res.cloudinary.com/dlesei0kn/image/upload/IMG-20251103-WA0003_bgmgkj.jpg'
+  'https://res.cloudinary.com/dlesei0kn/image/upload/tech-mate_logo_cpaljz.png'
   
 const IconPhone = () => (  
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">  
