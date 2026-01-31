@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import {
@@ -10,9 +10,10 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import { auth, db } from '@/lib/firebase'
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore'
+import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore'
 import toast from 'react-hot-toast'
 import { FcGoogle } from 'react-icons/fc'
+import { Eye, EyeOff } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 
 interface SignupForm {
@@ -26,7 +27,12 @@ interface SignupForm {
 export default function SignupPage() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
+
   const [loading, setLoading] = useState(false)
+  const [passwordError, setPasswordError] = useState<string | null>(null)
+
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const [form, setForm] = useState<SignupForm>({
     name: '',
@@ -44,7 +50,7 @@ export default function SignupPage() {
     }
   }, [])
 
-  /* ✅ REDIRECT AFTER AUTH CONTEXT IS READY */
+  /* ✅ Redirect ONLY when auth context is ready */
   useEffect(() => {
     if (!isLoading && user) {
       router.replace('/profile')
@@ -52,7 +58,12 @@ export default function SignupPage() {
   }, [user, isLoading, router])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm(p => ({ ...p, [e.target.name]: e.target.value }))
+    const { name, value } = e.target
+    setForm(p => ({ ...p, [name]: value }))
+
+    if (name === 'password' || name === 'confirmPassword') {
+      setPasswordError(null)
+    }
   }
 
   /* ================= EMAIL SIGNUP ================= */
@@ -61,11 +72,13 @@ export default function SignupPage() {
     e.preventDefault()
 
     if (form.password !== form.confirmPassword) {
+      setPasswordError('Passwords do not match')
       toast.error('Passwords do not match')
       return
     }
 
     if (form.password.length < 6) {
+      setPasswordError('Password must be at least 6 characters')
       toast.error('Password must be at least 6 characters')
       return
     }
@@ -83,25 +96,27 @@ export default function SignupPage() {
 
       await updateProfile(user, { displayName: form.name })
 
-      await setDoc(doc(db, 'users', user.uid), {
-        uid: user.uid,
-        name: form.name,
-        email: form.email,
-        phone: form.phone || '',
-        role: 'user',
-        photoURL: '',
-        isDisabled: false,
-        createdAt: serverTimestamp(),
-      })
+      const ref = doc(db, 'users', user.uid)
+      const snap = await getDoc(ref)
+
+      if (!snap.exists()) {
+        await setDoc(ref, {
+          uid: user.uid,
+          name: form.name,
+          email: form.email,
+          phone: form.phone || '',
+          role: 'user',
+          photoURL: '',
+          isDisabled: false,
+          createdAt: serverTimestamp(),
+        })
+      }
 
       toast.success('Account created successfully')
-      // ❌ DO NOT redirect here
-    } catch (e: any) {
-      toast.error(
-        e?.code === 'auth/email-already-in-use'
-          ? 'Email already registered. Please login.'
-          : 'Signup failed. Please try again.'
-      )
+      // ❌ Do NOT redirect here
+    } catch (err: any) {
+      console.error(err)
+      toast.error('Signup failed. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -112,10 +127,7 @@ export default function SignupPage() {
   const handleGoogleSignup = async () => {
     setLoading(true)
     try {
-      const { user } = await signInWithPopup(
-        auth,
-        new GoogleAuthProvider()
-      )
+      const { user } = await signInWithPopup(auth, new GoogleAuthProvider())
 
       const ref = doc(db, 'users', user.uid)
       const snap = await getDoc(ref)
@@ -134,9 +146,8 @@ export default function SignupPage() {
       }
 
       toast.success('Account created successfully')
-      // ❌ DO NOT redirect here
-    } catch (e) {
-      console.error(e)
+    } catch (err) {
+      console.error(err)
       toast.error('Google signup failed')
     } finally {
       setLoading(false)
@@ -153,15 +164,16 @@ export default function SignupPage() {
           {/* HEADER */}
           <div className="text-center mb-6">
             <h1 className="text-2xl font-bold text-gray-900">
-              Welcome to TECHMATE
+              Create your account
             </h1>
             <p className="text-sm text-gray-600 mt-1">
-              Create your account to connect with us
+              Join TECHMATE to connect with us
             </p>
           </div>
 
           {/* FORM */}
           <form onSubmit={handleSignup} className="space-y-4">
+
             <input
               name="name"
               placeholder="Full name"
@@ -169,6 +181,7 @@ export default function SignupPage() {
               onChange={onChange}
               className="input-field"
             />
+
             <input
               name="email"
               type="email"
@@ -177,28 +190,61 @@ export default function SignupPage() {
               onChange={onChange}
               className="input-field"
             />
+
             <input
               name="phone"
               placeholder="Phone (optional)"
               onChange={onChange}
               className="input-field"
             />
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              required
-              onChange={onChange}
-              className="input-field"
-            />
-            <input
-              name="confirmPassword"
-              type="password"
-              placeholder="Confirm password"
-              required
-              onChange={onChange}
-              className="input-field"
-            />
+
+            {/* PASSWORD */}
+            <div className="relative">
+              <input
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Password"
+                required
+                onChange={onChange}
+                className={`input-field pr-10 ${
+                  passwordError ? 'border-red-500 focus:border-red-500' : ''
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(p => !p)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+
+            {/* CONFIRM PASSWORD */}
+            <div className="relative">
+              <input
+                name="confirmPassword"
+                type={showConfirmPassword ? 'text' : 'password'}
+                placeholder="Confirm password"
+                required
+                onChange={onChange}
+                className={`input-field pr-10 ${
+                  passwordError ? 'border-red-500 focus:border-red-500' : ''
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(p => !p)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+
+            {passwordError && (
+              <p className="text-sm text-red-600 font-medium">
+                {passwordError}
+              </p>
+            )}
 
             <button
               disabled={loading}
@@ -219,20 +265,14 @@ export default function SignupPage() {
           <button
             onClick={handleGoogleSignup}
             disabled={loading}
-            className="w-full h-11 border rounded-lg font-semibold flex items-center justify-center gap-3 hover:bg-gray-50 transition"
+            className="w-full h-11 border rounded-lg font-semibold flex items-center justify-center gap-3 hover:bg-gray-50"
           >
             <FcGoogle size={22} />
             Continue with Google
           </button>
 
-          {/* LEGAL */}
-          <p className="mt-6 text-xs text-gray-500 text-center">
-            By creating the account, you agree to our{' '}
-            <Link href="/terms" className="text-blue-600">Terms</Link> and{' '}
-            <Link href="/privacy" className="text-blue-600">Privacy Policy</Link>.
-          </p>
-
-          <p className="mt-4 text-sm text-gray-600 text-center">
+          {/* FOOTER */}
+          <p className="mt-6 text-sm text-gray-600 text-center">
             Already have an account?{' '}
             <Link href="/login" className="font-semibold text-blue-600">
               Sign in
