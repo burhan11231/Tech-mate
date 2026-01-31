@@ -86,6 +86,8 @@ await setDoc(doc(db, 'users', user.uid), {
   createdAt: serverTimestamp(),
 })
 
+await user.reload() // 🔥 important
+
 toast.success('Account created successfully')
 router.push('/profile')
     } catch (e: any) {
