@@ -15,7 +15,7 @@ export default function ReviewSchema({ reviews }: Props) {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: 'MITC – Mateen IT Corp',
+    name: 'TECHMATE Gadgets',
     review: reviews.map((r) => ({
       '@type': 'Review',
       author: {
