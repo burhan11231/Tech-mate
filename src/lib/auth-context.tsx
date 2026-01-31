@@ -62,12 +62,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const snap = await getDoc(ref)    
     
         // 🔹 Firestore user missing → invalid account    
-        if (!snap.exists()) {    
-          console.warn('[AUTH] User doc missing, signing out')    
-          await signOut(auth)    
-          setUser(null)    
-          return    
-        }    
+        if (!snap.exists()) {
+  console.warn('[AUTH] User doc missing, waiting for creation')
+  setIsLoading(false)
+  return
+}    
     
         const data = snap.data()    
     
