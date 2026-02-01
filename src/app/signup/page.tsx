@@ -68,59 +68,41 @@ export default function SignupPage() {
 
   /* ================= EMAIL SIGNUP ================= */
 
-  const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSignup = async (e: const handleSignup = async (e: React.FormEvent) => {
+  e.preventDefault()
 
-    if (form.password !== form.confirmPassword) {
-      setPasswordError('Passwords do not match')
-      toast.error('Passwords do not match')
-      return
-    }
-
-    if (form.password.length < 6) {
-      setPasswordError('Password must be at least 6 characters')
-      toast.error('Password must be at least 6 characters')
-      return
-    }
-
-    setLoading(true)
-
-    try {
-      const cred = await createUserWithEmailAndPassword(
-        auth,
-        form.email,
-        form.password
-      )
-
-      const user = cred.user
-
-      await updateProfile(user, { displayName: form.name })
-
-      const ref = doc(db, 'users', user.uid)
-      const snap = await getDoc(ref)
-
-      if (!snap.exists()) {
-        await setDoc(ref, {
-          uid: user.uid,
-          name: form.name,
-          email: form.email,
-          phone: form.phone || '',
-          role: 'user',
-          photoURL: '',
-          isDisabled: false,
-          createdAt: serverTimestamp(),
-        })
-      }
-
-      toast.success('Account created successfully')
-      // ❌ Do NOT redirect here
-    } catch (err: any) {
-      console.error(err)
-      toast.error('Signup failed. Please try again.')
-    } finally {
-      setLoading(false)
-    }
+  if (form.password !== form.confirmPassword) {
+    setPasswordError('Passwords do not match')
+    toast.error('Passwords do not match')
+    return
   }
+
+  if (form.password.length < 6) {
+    setPasswordError('Password must be at least 6 characters')
+    toast.error('Password must be at least 6 characters')
+    return
+  }
+
+  setLoading(true)
+
+  try {
+    // 🔐 STORE NAME TEMPORARILY
+    sessionStorage.setItem('signup_name', form.name)
+
+    await createUserWithEmailAndPassword(
+      auth,
+      form.email,
+      form.password
+    )
+
+    toast.success('Account created successfully')
+  } catch (err) {
+    console.error(err)
+    toast.error('Signup failed. Please try again.')
+  } finally {
+    setLoading(false)
+  }
+}
 
   /* ================= GOOGLE SIGNUP ================= */
 
