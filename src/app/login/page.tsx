@@ -70,38 +70,42 @@ export default function LoginPage() {
   /* ================= LOGIN ================= */
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (isLocked) return toast.error('Account temporarily locked')
+  e.preventDefault()
+  if (isLocked) return toast.error('Account temporarily locked')
 
-    setLoading(true)
-    try {
-      const cred = await signInWithEmailAndPassword(auth, email, password)
-      await postAuthCheck(cred.user)
-    } catch (e: any) {
-      recordFailure()
-      toast.error(
-        e.code === 'auth/wrong-password'
-          ? 'Incorrect password'
-          : 'Login failed'
-      )
-      await signOut(auth)
-    } finally {
-      setLoading(false)
-    }
+  setLoading(true)
+  try {
+    sessionStorage.setItem('auth_intent', 'login') // ✅ ADD THIS
+
+    const cred = await signInWithEmailAndPassword(auth, email, password)
+    await postAuthCheck(cred.user)
+  } catch (e: any) {
+    recordFailure()
+    toast.error(
+      e.code === 'auth/wrong-password'
+        ? 'Incorrect password'
+        : 'Login failed'
+    )
+    await signOut(auth)
+  } finally {
+    setLoading(false)
   }
+}
 
   const handleGoogleLogin = async () => {
-    setLoading(true)
-    try {
-      const { user } = await signInWithPopup(auth, new GoogleAuthProvider())
-      await postAuthCheck(user)
-    } catch {
-      toast.error('Google login failed')
-      await signOut(auth)
-    } finally {
-      setLoading(false)
-    }
+  setLoading(true)
+  try {
+    sessionStorage.setItem('auth_intent', 'login') // ✅ ADD THIS
+
+    const { user } = await signInWithPopup(auth, new GoogleAuthProvider())
+    await postAuthCheck(user)
+  } catch {
+    toast.error('Google login failed')
+    await signOut(auth)
+  } finally {
+    setLoading(false)
   }
+}
 
   const postAuthCheck = async (user: User) => {
     const snap = await getDoc(doc(db, 'users', user.uid))
