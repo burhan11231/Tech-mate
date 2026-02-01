@@ -14,6 +14,7 @@ import { auth, db } from '@/lib/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import toast from 'react-hot-toast'
 import { FcGoogle } from 'react-icons/fc'
+import { Eye, EyeOff } from 'lucide-react'
 
 const MAX_ATTEMPTS = 5
 const LOCK_TIME_MS = 5 * 60 * 1000
@@ -23,11 +24,12 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const [lockedUntil, setLockedUntil] = useState<number | null>(null)
 
-  // 🔐 Deactivated account flow (same modal)
+  // 🔐 Deactivated account flow
   const [pendingUser, setPendingUser] = useState<User | null>(null)
 
   /* 🔒 LOCK BACKGROUND SCROLL */
@@ -126,7 +128,6 @@ export default function LoginPage() {
 
     try {
       setLoading(true)
-
       const token = await pendingUser.getIdToken()
       const res = await fetch('/api/account/activate', {
         method: 'POST',
@@ -158,26 +159,22 @@ export default function LoginPage() {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm overflow-y-auto">
-
-      {/* MODAL WRAPPER */}
       <div className="min-h-full flex justify-center px-4 py-10">
-
-        {/* MODAL */}
         <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 sm:p-8 my-auto">
 
-          {/* HEADER */}      
-          <div className="text-center mb-6">      
-            <h1 className="text-2xl font-bold text-gray-900">      
-              {pendingUser ? 'Restore account access' : 'Welcome back'}      
-            </h1>      
-            <p className="text-sm text-gray-600 mt-1">      
-              {pendingUser      
-                ? 'Your account access is paused. Activate it and log in again.'      
-                : 'Log in to your MITC account'}      
-            </p>      
+          {/* HEADER */}
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold text-gray-900">
+              {pendingUser ? 'Restore account access' : 'Welcome back'}
+            </h1>
+            <p className="text-sm text-gray-600 mt-1">
+              {pendingUser
+                ? 'Your account access is paused. Activate it and log in again.'
+                : 'Log in to your MITC account'}
+            </p>
           </div>
 
-          {/* 🔐 ACTIVATION FLOW (same modal) */}
+          {/* 🔐 ACTIVATION FLOW */}
           {pendingUser ? (
             <div className="space-y-4">
               <button
@@ -208,15 +205,25 @@ export default function LoginPage() {
                   className="input-field"
                 />
 
-                <input
-                  type="password"
-                  placeholder="Password"
-                  required
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  disabled={isLocked}
-                  className="input-field"
-                />
+                {/* PASSWORD WITH TOGGLE */}
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Password"
+                    required
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    disabled={isLocked}
+                    className="input-field pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(p => !p)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
 
                 <button
                   disabled={loading || isLocked}
@@ -225,7 +232,6 @@ export default function LoginPage() {
                   {loading ? 'Signing in…' : 'Sign in'}
                 </button>
               </form>
-
 
               {/* DIVIDER */}
               <div className="my-6 flex items-center gap-3">
@@ -244,17 +250,15 @@ export default function LoginPage() {
                 Continue with Google
               </button>
 
-<p className="mt-6 text-center text-sm">
-  <Link
-    href="/password-reset"
-    className="text-blue-600 font-semibold hover:underline"
-  >
-    Forgot password?
-  </Link>
-</p>
+              <p className="mt-6 text-center text-sm">
+                <Link
+                  href="/password-reset"
+                  className="text-blue-600 font-semibold hover:underline"
+                >
+                  Forgot password?
+                </Link>
+              </p>
 
-
-              {/* SIGNUP LINK */}
               <p className="mt-6 text-sm text-gray-600 text-center">
                 Don’t have an account?{' '}
                 <Link href="/signup" className="font-semibold text-blue-600">
