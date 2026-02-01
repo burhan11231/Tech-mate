@@ -7,10 +7,8 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-  updateProfile,
 } from 'firebase/auth'
-import { auth, db } from '@/lib/firebase'
-import { doc, setDoc, serverTimestamp, getDoc } from 'firebase/firestore'
+import { auth } from '@/lib/firebase'
 import toast from 'react-hot-toast'
 import { FcGoogle } from 'react-icons/fc'
 import { Eye, EyeOff } from 'lucide-react'
@@ -26,7 +24,7 @@ interface SignupForm {
 
 export default function SignupPage() {
   const router = useRouter()
-  const { user, isLoading } = useAuth()
+  const { user } = useAuth()
 
   const [loading, setLoading] = useState(false)
   const [passwordError, setPasswordError] = useState<string | null>(null)
@@ -50,17 +48,14 @@ export default function SignupPage() {
     }
   }, [])
 
-  /* ✅ Redirect ONLY when auth context is ready */
+  /* ✅ Redirect handled ONLY by auth-context */
   useEffect(() => {
-  if (user) {
-    router.replace('/')
-  }
-}, [user, router])
+    if (user) router.replace('/')
+  }, [user, router])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setForm(p => ({ ...p, [name]: value }))
-
     if (name === 'password' || name === 'confirmPassword') {
       setPasswordError(null)
     }
@@ -68,77 +63,73 @@ export default function SignupPage() {
 
   /* ================= EMAIL SIGNUP ================= */
 
-  const handleSignup = async (e: const handleSignup = async (e: React.FormEvent) => {
-  e.preventDefault()
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault()
 
-  if (form.password !== form.confirmPassword) {
-    setPasswordError('Passwords do not match')
-    toast.error('Passwords do not match')
-    return
+    if (form.password !== form.confirmPassword) {
+      setPasswordError('Passwords do not match')
+      toast.error('Passwords do not match')
+      return
+    }
+
+    if (form.password.length < 6) {
+      setPasswordError('Password must be at least 6 characters')
+      toast.error('Password must be at least 6 characters')
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      // 🔐 Tell auth-context what this action is
+      sessionStorage.setItem('auth_intent', 'signup')
+      sessionStorage.setItem('signup_name', form.name)
+
+      await createUserWithEmailAndPassword(
+        auth,
+        form.email,
+        form.password
+      )
+      // ✅ NO toast here
+      // ✅ NO redirect here
+    } catch (err: any) {
+      console.error('[EMAIL_SIGNUP_ERROR]', err)
+
+      if (err?.code === 'auth/email-already-in-use') {
+        toast.error('Account already exists. Logging you in…')
+      } else {
+        toast.error('Signup failed. Please try again.')
+      }
+    } finally {
+      setLoading(false)
+    }
   }
-
-  if (form.password.length < 6) {
-    setPasswordError('Password must be at least 6 characters')
-    toast.error('Password must be at least 6 characters')
-    return
-  }
-
-  setLoading(true)
-
-  try {
-    // 🔐 STORE NAME TEMPORARILY
-    sessionStorage.setItem('signup_name', form.name)
-
-    await createUserWithEmailAndPassword(
-      auth,
-      form.email,
-      form.password
-    )
-
-    toast.success('Account created successfully')
-  } catch (err) {
-    console.error(err)
-    toast.error('Signup failed. Please try again.')
-  } finally {
-    setLoading(false)
-  }
-}
 
   /* ================= GOOGLE SIGNUP ================= */
 
   const handleGoogleSignup = async () => {
-  setLoading(true)
+    setLoading(true)
 
-  try {
-    const result = await signInWithPopup(
-      auth,
-      new GoogleAuthProvider()
-    )
+    try {
+      sessionStorage.setItem('auth_intent', 'signup')
 
-    // 🔐 If user exists, signup/login is SUCCESS
-    if (result?.user) {
-      toast.success('Account created successfully')
-      return // ⛔ IMPORTANT: stop here
+      await signInWithPopup(auth, new GoogleAuthProvider())
+      // ✅ Auth-context will handle everything
+    } catch (err: any) {
+      console.error('[GOOGLE_SIGNUP_ERROR]', err)
+
+      if (
+        err?.code === 'auth/popup-closed-by-user' ||
+        err?.code === 'auth/cancelled-popup-request'
+      ) {
+        return
+      }
+
+      toast.error('Google signup failed')
+    } finally {
+      setLoading(false)
     }
-
-    // fallback (rare)
-    toast.error('Google signup failed')
-  } catch (err: any) {
-    console.error('[GOOGLE_SIGNUP_ERROR]', err)
-
-    // ❗ Ignore abort/navigation related errors
-    if (
-      err?.code === 'auth/popup-closed-by-user' ||
-      err?.code === 'auth/cancelled-popup-request'
-    ) {
-      return
-    }
-
-    toast.error('Google signup failed')
-  } finally {
-    setLoading(false)
   }
-}
 
   /* ================= UI ================= */
 
