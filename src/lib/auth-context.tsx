@@ -99,6 +99,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         /* ---------- HARD BLOCK: DISABLED ACCOUNT ---------- */
         if (data?.isDisabled === true) {
+          if (intent === 'signup') {
+            toast.error(
+              'Account is deactivated. Please log in to activate it.'
+            )
+          }
+
           await signOut(auth)
           setUser(null)
           setIsLoading(false)
@@ -119,12 +125,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         /* ---------- GLOBAL SUCCESS TOAST ---------- */
         if (intent === 'signup') {
-          toast.success(
-            isNewUser
-              ? 'Account created successfully'
-              : 'Logged in successfully'
-          )
-        }
+  toast.success(
+    isNewUser
+      ? 'Account created successfully'
+      : 'Logged in successfully'
+  )
+}
+
+if (intent === 'login') {
+  toast.success('Logged in successfully')
+}
       } catch (err) {
         console.error('[AUTH_CONTEXT_ERROR]', err)
         await signOut(auth)
