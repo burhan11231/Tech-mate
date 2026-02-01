@@ -62,19 +62,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         // ✅ CREATE USER DOC IF MISSING (CRITICAL FIX)
         if (!snap.exists()) {
-          await setDoc(ref, {
-            uid: authUser.uid,
-            name: authUser.displayName || 'User',
-            email: authUser.email || '',
-            phone: '',
-            role: 'user',
-            photoURL: authUser.photoURL || '',
-            isDisabled: false,
-            createdAt: serverTimestamp(),
-          })
+  const storedName =
+    typeof window !== 'undefined'
+      ? sessionStorage.getItem('signup_name')
+      : null
 
-          snap = await getDoc(ref)
-        }
+  await setDoc(ref, {
+    uid: authUser.uid,
+    name: storedName || authUser.displayName || 'User',
+    email: authUser.email || '',
+    phone: '',
+    role: 'user',
+    photoURL: authUser.photoURL || '',
+    isDisabled: false,
+    createdAt: serverTimestamp(),
+  })
+
+  if (storedName) {
+    sessionStorage.removeItem('signup_name') // 🧹 cleanup
+  }
+
+  snap = await getDoc(ref)
+}
 
         const data = snap.data()
 
