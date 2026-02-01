@@ -18,6 +18,7 @@ import React, {
   useState,
 } from 'react'
 import { auth, db } from '@/lib/firebase'
+import toast from 'react-hot-toast'
 
 /* ---------------- TYPES ---------------- */
 
@@ -60,33 +61,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const ref = doc(db, 'users', authUser.uid)
         let snap = await getDoc(ref)
 
-        // ✅ CREATE USER DOC IF MISSING (CRITICAL FIX)
-        if (!snap.exists()) {
-  const storedName =
-    typeof window !== 'undefined'
-      ? sessionStorage.getItem('signup_name')
-      : null
+        const intent =
+          typeof window !== 'undefined'
+            ? sessionStorage.getItem('auth_intent')
+            : null
 
-  await setDoc(ref, {
-    uid: authUser.uid,
-    name: storedName || authUser.displayName || 'User',
-    email: authUser.email || '',
-    phone: '',
-    role: 'user',
-    photoURL: authUser.photoURL || '',
-    isDisabled: false,
-    createdAt: serverTimestamp(),
-  })
+        const storedName =
+          typeof window !== 'undefined'
+            ? sessionStorage.getItem('signup_name')
+            : null
 
-  if (storedName) {
-    sessionStorage.removeItem('signup_name') // 🧹 cleanup
-  }
+        const isNewUser = !snap.exists()
 
-  snap = await getDoc(ref)
-}
+        /* ---------- CREATE USER DOC IF MISSING ---------- */
+        if (isNewUser) {
+          await setDoc(ref, {
+            uid: authUser.uid,
+            name: storedName || authUser.displayName || 'User',
+            email: authUser.email || '',
+            phone: '',
+            role: 'user',
+            photoURL: authUser.photoURL || '',
+            isDisabled: false,
+            createdAt: serverTimestamp(),
+          })
+
+          snap = await getDoc(ref)
+        }
+
+        /* ---------- CLEAN TEMP STORAGE ---------- */
+        if (typeof window !== 'undefined') {
+          sessionStorage.removeItem('signup_name')
+          sessionStorage.removeItem('auth_intent')
+        }
 
         const data = snap.data()
 
+        /* ---------- HARD BLOCK: DISABLED ACCOUNT ---------- */
         if (data?.isDisabled === true) {
           await signOut(auth)
           setUser(null)
@@ -94,6 +105,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return
         }
 
+        /* ---------- SET APP USER ---------- */
         setUser({
           uid: authUser.uid,
           name: data?.name || authUser.displayName || 'User',
@@ -104,6 +116,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           providers: authUser.providerData.map(p => p.providerId),
           lastNameUpdatedAt: data?.lastNameUpdatedAt,
         })
+
+        /* ---------- GLOBAL SUCCESS TOAST ---------- */
+        if (intent === 'signup') {
+          toast.success(
+            isNewUser
+              ? 'Account created successfully'
+              : 'Logged in successfully'
+          )
+        }
       } catch (err) {
         console.error('[AUTH_CONTEXT_ERROR]', err)
         await signOut(auth)
