@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Provider } from './provider'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import CopyrightStamp from '@/components/CopyrightStamp'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -44,6 +45,9 @@ export default function RootLayout({
 
           <Footer />
         </Provider>
+
+        {/* Global Preview Protection */}
+        <CopyrightStamp />
       </body>
     </html>
   )
