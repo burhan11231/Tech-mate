@@ -16,6 +16,9 @@
                     <text text-anchor="middle" font-size="58" font-weight="700" font-family="Space Grotesk" fill="none" stroke="#0f172a" stroke-width="1.5" letter-spacing="10">
                         KASHPAGES
                     </text>
+                  <text x="250" y="360" text-anchor="middle" font-size="11" font-weight="400" fill="#0f172a">
+                    LICENSED FOR EVALUATION · COMMERCIAL USE PROHIBITED
+                </text>
                     <text y="35" text-anchor="middle" font-size="12" font-weight="500" font-family="Space Grotesk" fill="#0f172a" letter-spacing="4">
                         INTELLECTUAL PROPERTY DEPT.
                     </text>
@@ -28,9 +31,6 @@
                 </text>
 
                 <!-- Bottom Details -->
-                <text x="250" y="360" text-anchor="middle" font-size="11" font-weight="400" fill="#0f172a">
-                    LICENSED FOR EVALUATION · COMMERCIAL USE PROHIBITED
-                </text>
                 <text x="250" y="380" text-anchor="middle" font-size="10" font-weight="300" fill="#0f172a" font-style="italic">
                     Verification ID: KP-SEC-2026-X91
                 </text>
