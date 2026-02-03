@@ -3,64 +3,150 @@
   viewBox="0 0 500 500"
   fill="none"
 >
-  <!-- Outer Circle -->
+  <defs>
+    <!-- Scanning Lines Pattern -->
+    <pattern
+      id="diagonalLines"
+      width="10"
+      height="10"
+      patternUnits="userSpaceOnUse"
+      patternTransform="rotate(45)"
+    >
+      <line
+        x1="0"
+        y1="0"
+        x2="0"
+        y2="10"
+        stroke="#0f172a"
+        stroke-width="1"
+      />
+    </pattern>
+  </defs>
+
+  <!-- Outlined Rings for Transparency -->
   <circle
     cx="250"
     cy="250"
     r="230"
-    stroke="#000"
-    stroke-width="8"
+    stroke="#0f172a"
+    stroke-width="2"
+    fill="none"
   />
 
-  <!-- Inner Circle -->
+  <circle
+    cx="250"
+    cy="250"
+    r="222"
+    stroke="#0f172a"
+    stroke-width="8"
+    stroke-dasharray="1 15"
+    fill="none"
+  />
+
+  <!-- Top Curved Text Path -->
+  <path
+    id="topCurve"
+    d="M 100 250 A 150 150 0 0 1 400 250"
+    fill="none"
+  />
+
+  <text
+    font-family="Space Grotesk, Inter, system-ui, Arial, sans-serif"
+    font-size="14"
+    font-weight="700"
+    fill="#0f172a"
+    letter-spacing="8"
+  >
+    <textPath
+      href="#topCurve"
+      startOffset="50%"
+      text-anchor="middle"
+    >
+      SECURE PREVIEW SYSTEM
+    </textPath>
+  </text>
+
+  <!-- Central Branding -->
+  <g transform="translate(250 240)">
+    <text
+      text-anchor="middle"
+      font-size="58"
+      font-weight="700"
+      font-family="Space Grotesk, Inter, system-ui, Arial, sans-serif"
+      fill="none"
+      stroke="#0f172a"
+      stroke-width="1.5"
+      letter-spacing="10"
+    >
+      KASHPAGES
+    </text>
+
+    <text
+      y="35"
+      text-anchor="middle"
+      font-size="12"
+      font-weight="500"
+      font-family="Space Grotesk, Inter, system-ui, Arial, sans-serif"
+      fill="#0f172a"
+      letter-spacing="4"
+    >
+      INTELLECTUAL PROPERTY DEPT.
+    </text>
+  </g>
+
+  <!-- Void Banner -->
+  <rect
+    x="125"
+    y="290"
+    width="250"
+    height="40"
+    rx="4"
+    fill="#0f172a"
+  />
+
+  <text
+    x="250"
+    y="316"
+    text-anchor="middle"
+    font-size="18"
+    font-weight="700"
+    font-family="Space Grotesk, Inter, system-ui, Arial, sans-serif"
+    fill="#ffffff"
+    letter-spacing="3"
+  >
+    COPYRIGHTED ASSET
+  </text>
+
+  <!-- Bottom Details -->
+  <text
+    x="250"
+    y="360"
+    text-anchor="middle"
+    font-size="11"
+    font-weight="400"
+    fill="#0f172a"
+  >
+    LICENSED FOR: INTERNAL EVALUATION ONLY
+  </text>
+
+  <text
+    x="250"
+    y="380"
+    text-anchor="middle"
+    font-size="10"
+    font-weight="300"
+    fill="#0f172a"
+    font-style="italic"
+  >
+    Verification ID: KP-992-0X-2024
+  </text>
+
+  <!-- Scanning Overlay -->
   <circle
     cx="250"
     cy="250"
     r="200"
-    stroke="#000"
-    stroke-width="2"
-    stroke-dasharray="6 6"
+    fill="url(#diagonalLines)"
+    opacity="0.1"
   />
-
-  <!-- Brand Name -->
-  <text
-    x="250"
-    y="215"
-    text-anchor="middle"
-    font-size="48"
-    font-weight="700"
-    font-family="Arial, Helvetica, sans-serif"
-    fill="#000"
-    letter-spacing="3"
-  >
-    KASHPAGES
-  </text>
-
-  <!-- Copyright -->
-  <text
-    x="250"
-    y="255"
-    text-anchor="middle"
-    font-size="10" 
-    font-weight="600"
-    font-family="Arial, Helvetica, sans-serif"
-    fill="#000"
-    letter-spacing="2"
-  >
-    © COPYRIGHT – PREVIEW VERSION
-  </text>
-
-  <!-- Warning -->
-  <text
-    x="250"
-    y="295"
-    text-anchor="middle"
-    font-size="16"
-    font-weight="500"
-    font-family="Arial, Helvetica, sans-serif"
-    fill="#000"
-    letter-spacing="1.5"
-  >
-    UNAUTHORIZED USE PROHIBITED
-  </text>
 </svg>
